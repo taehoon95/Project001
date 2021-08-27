@@ -2,7 +2,11 @@ package Pack;
 
 /*  
 // Ex)
-class Tiger{
+class Animal{
+	
+}
+
+class Tiger extends Animal{
 	
 }
 
@@ -12,6 +16,698 @@ public class Hello {
 	}
 }
 */
+// Ex40)
+class A{
+	void m1() {
+		System.out.println(1);
+	}
+}
+
+interface B{
+	void m2(); // 함수원형(함수프로토타입)
+}
+
+interface C{
+	void m3(); // 함수원형(함수프로토타입)
+}
+
+class D extends A implements B, C {
+	@Override
+	public void m2() {
+		System.out.println(22);
+	}
+
+	@Override
+	public void m3() {
+		System.out.println(33);
+	}
+}
+
+//인터페이스 분리 원칙 지키려고한다.
+@FunctionalInterface // @FunctionalInterface: 인터페이스 안에는 반드시 1개의 메서드만 사용하기 위해 작성
+interface E {
+	void m1();
+//	void m2();
+}
+
+public class Hello {
+	public static void main(String[] args) {
+		D t1 = new D();
+		
+		t1.m1();
+		t1.m2();
+		t1.m3();
+		
+		//Thread t2 = null : t2는 "지금 객체가 아니다" 강조
+		Thread t2 = null;
+		String t3 = null;
+		StringBuffer t4 = null;
+	}
+}
+
+/*
+
+// Ex39)
+interface 한국은행{
+	void 입금();
+	void 출금();
+	void 이체();
+	void 대출();
+}
+
+class 국민은행 implements 한국은행{
+
+	@Override
+	public void 입금() {
+		System.out.println("이자율은 3%입니다.");
+	}
+
+	@Override
+	public void 출금() {
+		
+	}
+
+	@Override
+	public void 이체() {
+		
+	}
+
+	@Override
+	public void 대출() {
+		
+	}
+	
+}
+
+class 우리은행 implements 한국은행{
+
+	@Override
+	public void 입금() {
+		System.out.println("이자율은 6% 입니다.");
+	}
+
+	@Override
+	public void 출금() {
+		
+	}
+
+	@Override
+	public void 이체() {
+		
+	}
+
+	@Override
+	public void 대출() {
+		
+	}
+	
+}
+
+public class Hello {
+	public static void main(String[] args) {
+		한국은행 t1 = new 국민은행();
+		한국은행 t2 = new 우리은행();
+		
+		t1.입금();
+		t2.입금();
+	}
+}
+
+
+// Ex38)
+
+abstract class 대장장이{
+	void 칼() {
+		System.out.println("칼을 잘 만듭니다.");
+	}
+
+	// 단일책임원칙 위배 : 칼만 잘만드는데 방패를 억지로 만듬
+//	void 방패() {
+//		System.out.println("허접 방패");
+//	}
+	
+	abstract void 방패();
+}
+
+//칼을 잘쓰는 대장장이를 이용
+//나그네는 무조건 방패를 만들긴 해야됌
+class 나그네1 extends 대장장이{
+
+	void 방패() {
+		System.out.println("방패 잘 만듬");
+	}
+	
+}
+
+class 나그네2 extends 대장장이{
+	
+	//@ : 어노테이션(프로그래머가 실수 할 수 있는 것을 미연에 방지 하기 위해 사용)
+	//오버라이딩 : 자식이 사용하는 함수이름이 부모함수이름 이랑 동일 할 때
+	
+//	@Override //방파()에 빨간줄로 알려줌
+//	void 방파() { //방파() -> 방패()로 착각
+//		
+//	}
+	
+	@Override
+	void 방패() {
+		
+	}
+	
+}
+
+public class Hello {
+	public static void main(String[] args) {
+		대장장이 t1 = new 나그네1();
+		t1.칼();
+		t1.방패();
+		
+		대장장이 t2 = new 나그네2();
+		t2.칼();
+		t2.방패();
+	}
+}
+
+
+// Ex37)
+
+//abstract class Animal{
+//	abstract void m1();
+//};
+
+//class Tiger extends Animal{
+//	void m1() {
+//		System.out.println(2);
+//	}
+//}
+
+//인터페이스로 바꿀수 있으면 왠만하면 인터페이스로 사용
+interface Animal{
+	void m1();
+};
+
+class Tiger implements Animal{
+	
+	//인터페이스를 상속 받아서 메서드를 만들면 앞에 public이 필요함
+	public void m1() { 
+		System.out.println(2);
+	}
+}
+
+public class Hello {
+	public static void main(String[] args) {
+		Animal a = new Tiger();
+		a.m1();
+		
+		//추상 클래스는 객체 생성 불가(코드가 미완성이라)
+//		Animal t2 = new Animal();
+		
+	}
+}
+
+// Ex36)
+class Animal{
+	void cry() {
+		System.out.println("...");
+	}
+}
+
+class Dog extends Animal{
+	void cry() {
+		System.out.println("멍멍!");
+	}
+}
+
+class Cat extends Animal{
+	void cry() {
+		System.out.println("야옹~");
+	}
+}
+
+class Snake extends Animal{}
+
+public class Hello {
+	public static void main(String[] args) {
+		Animal t0 = new Dog();
+		Animal t1 = new Cat();
+		Animal t2 = new Snake();
+
+		Random rn = new Random();
+		for (int i = 0; i < 10; i++) {
+			int num = rn.nextInt(3);
+			switch (num) {
+				case 0: {
+					t0.cry();
+					break;
+				}
+				case 1: {
+					t1.cry();
+					break;
+				}
+				case 2: {
+					t2.cry();
+					break;
+				}
+			}
+		}
+
+		System.out.println("---------------------------------");
+		for (int i = 0; i < 10; i++) {
+			Animal[] t3 = new Animal[] { new Dog(), new Cat(), new Snake() };
+			t3[rn.nextInt(3)].cry();
+		}
+	}
+}
+
+//Ex35)랜덤
+
+public class Hello {
+	public static void main(String[] args) {
+		Random rn = new Random();
+		System.out.println(rn.nextInt());
+		for (int i = 0; i < 10; i++) {
+			int num = rn.nextInt(2);
+			System.out.println(num);
+			System.out.println(rn.nextInt(10));
+		}
+	}
+}
+
+// Ex34)
+public class Hello {
+	public static void main(String[] args) {
+		int a = 10;
+		int[] ar = new int[5];
+
+		int[] br = new int[] { 1, 2, 3, 4, 5 };
+
+		int[] cr = { 10, 20, 30, 40, 50};
+
+		System.out.println(ar.length);
+		System.out.println(br.length);
+		System.out.println(cr.length);
+
+		for (int i = 0; i < cr.length; i++) {
+			int j = cr[i];
+			System.out.print(i + " : ");
+			System.out.format("%d ", br[i]);
+		}
+		System.out.println();
+		System.out.println("호랑이");
+
+		// i대신 x , data, value 사용
+		for (int x : cr) {
+			System.out.print(x + " ");
+		}
+		
+		//유효범위 : cr같은경우 메모리가 5개 []범위는 0~4까지 사용가능
+		cr[0] = 100;
+		cr[4] = 300;
+//		cr[5] = 400; 유효범위를 벗어나서 에러
+		
+//		ar[-1] = 100; 유효범위 벗어남
+		
+		int num = 3;
+		ar[num] = 500;
+		
+		ar[num*3 - 5] = 100;
+		
+		ar[2] = 3;
+		ar[ar[2]] = 999;
+		System.out.println();
+		System.out.println(ar[2] + " " + ar[3]);
+		
+		ar[ar[3]-998] = 888;
+
+		for (int x : ar) {
+			System.out.print(x + " ");
+		}
+		System.out.println();
+		System.out.println("------------------------------");
+		
+		boolean[] dr = {false,false,true,true};
+		for (boolean x : dr) {
+			System.out.print(x + " ");
+		}
+		System.out.println();
+		System.out.println("------------------------------");
+		
+		String[] ss = new String[4];
+		ss[0] = "호랑이";
+		ss[1] = "사자";
+		ss[2] = "사슴";
+		ss[3] = "사마귀";
+		
+		for (int i = 0; i < ss.length; i++) {
+			String string = ss[i];
+			System.out.println(string);
+		}
+		
+		String[] st = new String[] { "해바라기", "국화", "무궁화"};
+		String s1 = "호랑이";
+		String s2 = new String("독수리");
+		String[] su = new String[] { new String("민들레"), s2, "무궁화"};
+	}
+}
+
+
+// Ex33)
+class Animal{
+	void cry() {
+		System.out.println("...");
+	}
+}
+
+class Dog extends Animal{
+	void cry() {
+		System.out.println("멍멍!");
+	}
+}
+
+class Cat extends Animal{
+	void cry() {
+		System.out.println("야옹~");
+	}
+}
+
+class Snake extends Animal{}
+
+
+class Zoo {
+	
+// 개방 폐쇄의 원칙 : 확장에는 열려있으나 수정은 닫혀있다.
+//	void sound(Dog t) {
+//		t.cry();
+//	}
+//
+//	void sound(Cat t) {
+//		t.cry();
+//	}
+//
+//	void sound(Snake t) {
+//		t.cry();
+//	}
+	
+	void sound(Animal t) {
+		t.cry();
+	}
+}
+
+public class Hello {
+	public static void main(String[] args) {
+		Animal t1 = new Dog();
+		Animal t2 = new Cat();
+		Animal t3 = new Snake();
+		
+		t1.cry();
+		t2.cry();
+		t3.cry();
+		
+		System.out.println("-----------------");
+		Dog t4 = new Dog();
+		Cat t5 = new Cat();
+		Snake t6 = new Snake();
+		
+		t4.cry();
+		t5.cry();
+		t6.cry();
+		System.out.println("-----------------");
+
+		Zoo t7 = new Zoo();
+		t7.sound(new Dog());
+		t7.sound(new Cat());
+		t7.sound(new Snake());
+	}
+}
+
+
+//Ex32)
+class Animal{
+	void m1() {
+		System.out.println(1);
+	}
+	void m3() {
+		System.out.println(31);
+	}
+}
+
+class Tiger extends Animal{
+	void m2() {
+		System.out.println(2);
+	}
+	void m3() {
+		System.out.println(32);
+	}
+}
+
+public class Hello {
+	public static void main(String[] args) {
+		Animal t1 = new Animal(); //case1
+		Tiger t2 = new Tiger();   //case2
+		Animal t3 = new Tiger();  //case3 업캐스팅(부=자 관계) : 자식의 메모리를 쳐다보게 하기 위해
+		t3.m1();// 1
+		t3.m3();// 32 자식에게 똑같은 이름의 메서드가 있으면 자식꺼 사용
+//		Tiger t4 = new Animal();  //case4 다운캐스팅
+	}
+}
+
+// Ex31)
+class Animal {
+	Animal(){
+		System.out.println("부모 생성자 콜");
+	}
+	
+	Animal(int n){
+		System.out.println("부모"+n);
+	}
+	
+	Animal(int a, int b){
+		System.out.println("부모a*b : "+a*b);
+	}
+}
+class Tiger extends Animal{
+	Tiger(){
+		//현재라인에 코드가 한줄 생략 되어있다.
+		super();
+		System.out.println("자식 생성자 콜");
+	}
+	
+	Tiger(int num){
+		super(num + 100);
+		System.out.println(num + "콜");
+	}
+	
+	Tiger(int a, int b){
+		super(2,3);
+		System.out.println("3번째 생성자");
+//		super(); 여기에 쓰면 에러 super()는 반드시 제일 위에 있는걸로 정해져있다.(생략시에도 맨위)
+	}
+}
+
+public class Hello {
+	public static void main(String[] args) {
+		Tiger t = new Tiger();
+		
+		System.out.println("--------------------------------");
+		Tiger t2 = new Tiger(100);
+		
+		System.out.println("--------------------------------");
+		Tiger t3 = new Tiger(2,3);
+	}
+}
+
+// Ex30)
+
+class Animal{
+	void m2() {
+		System.out.println(2);
+	}
+	void m3() {
+		System.out.println(31);
+	}
+}
+
+class Tiger extends animal{ //호랑이는 동물이다(is a) 상속 관계
+	void m1() {
+		System.out.println(1);
+	}
+	void m3() {
+		System.out.println(32);
+	}
+	void m4() {
+		System.out.println(4);
+		m3();
+		super.m3();
+	}
+}
+
+public class Hello {
+	public static void main(String[] args) {
+		animal t1 = new animal();
+		
+		Tiger t2 = new Tiger();
+		t2.m1(); //1
+		t2.m2(); //2
+		t2.m3(); //32
+		t2.m4(); //4 32
+		
+		animal t3 = new Tiger();
+		
+	}
+}
+
+// Ex28)
+class Tiger{
+	
+	//컴파일 되면 객체 생성 여부와 관계없이 생성 됨, 객체끼리 공통으로 사용하는 변수
+	static int num2 = 100;
+	
+	int num1;
+	
+	//컴파일 되면 객체 생성 여부와 관계없이 생성 됨, 비용이 많이 드는 코드(속도,메모리에 안좋음)
+	//비용이 많이 드는 객체를 생성 안하고 사용하려고 함(비용 아낄려고)
+	//수학 관련 함수들 속도를 조금이라도 높여 보려고 static 함수로 사용
+	//예) 
+	static void m1() {
+		System.out.println("static 함수 콜");
+		System.out.println(Math.abs(-10));
+	}
+}
+
+public class Hello {
+	public static void main(String[] args) {
+		//static은 클래스이름으로 접근하는것이 원칙(그러나 객체이름으로도 할 수는 있지만 혼란을 일으킬 수 있다.)
+		System.out.println(Tiger.num2); //100 Tiger 객체 생성 없이 사용
+		
+		Tiger t1 = new Tiger();
+		System.out.println(t1.num2); //100
+		Tiger t2 = new Tiger();
+		t2.num2 = 200;
+		
+		System.out.println(t1.num2); //200
+		System.out.println(Tiger.num2); //200
+		
+		Tiger.m1();
+	}
+}
+
+// Ex27)
+class Car {
+	String name;
+	int fuel = 100;
+	
+	Car() {
+		name = "무명";
+		System.out.println("default call");
+	}
+	
+	Car(String n, int f) {
+		System.out.println("인수있는 생성자 콜");
+		fuel = f;
+		name = n;
+	}
+	
+	void move(String name){
+		System.out.println(name + " 자동차 달린다~~~");
+		fuel -= 30;
+	}
+	
+	void stop(String name) {
+		System.out.println(name + " 자동차 멈춤!");
+		fuel -= 10;
+	}
+	
+	//그냥 호출시 100 추가
+	void inject() {
+		fuel += 100;
+	}
+	
+	//인수 받아서 함
+	void inject(int f) {
+		fuel += f;
+	}
+	
+	void show() {
+		System.out.println(name + " " + fuel);
+	}
+	
+}
+
+public class Hello {
+	public static void main(String[] args) {
+		Car car1 = new Car();
+		car1.move(car1.name);
+		car1.stop(car1.name);
+		car1.show();
+		
+		Car car2 = new Car("꼬마",200);
+		car2.move(car2.name);
+		car2.stop(car2.name);
+		car2.show();
+	}
+}
+
+// Ex26)
+class Tiger{
+	Tiger(int a,int b){
+		
+	}
+	
+	Tiger() {}
+}
+
+public class Hello {
+	public static void main(String[] args) {
+		Tiger t1 = new Tiger();
+		Tiger t2 = new Tiger(10, 20);
+	}
+}
+//Ex25)
+class Tiger{
+	//1.생성자는 함수고 그래서 생성자 함수라고 한다.
+	//2.함수 이름은 클래스이름과 반드시 동일해야 한다.
+	//3.생성자 함수는 리턴값을 가질 수 없다. 그래서 void 조차도 생략한다.
+	//4.생성자 함수도 오버로딩이 가능하다.
+	//5.생성자 함수는 객체가 생성 될 때 단 한번 호출된다.(임의로 호출 할 수 없다.)
+	//6.생성자를 사용하는 목적은 멤버메서드를 초기화 시키는 목적으로 사용된다.
+	//7.생성자 함수를 작성하지 않을시에는 자동으로 디폴트생성자가 만들어 진다.
+	
+	int age = 20;
+	String name = "홍길동";
+	
+	//디폴트 생성자
+	Tiger(){
+//		age = 20;
+//		name = "홍길동";
+		System.out.println("생성자 호출");
+	}
+	
+	Tiger(int a, String n){
+		age = a;
+		name = n;
+	}
+	
+	void showInfo() {
+		System.out.println(age + " " + name);
+	}
+	
+}
+
+public class Hello {
+	public static void main(String[] args) {
+		Tiger t1 = new Tiger(); //생성자 호출
+		t1.showInfo();  //t1 홍길동 20
+		
+		Tiger t2 = new Tiger(); //생성자 호출
+		t2.showInfo();  //t2 홍길동 20
+		
+		Tiger t3 = new Tiger(100,"독수리"); //생성자 호출
+		t3.showInfo();  //t3 독수리 100
+		
+		Tiger t4 = new Tiger(200,"앵무새"); //생성자 호출
+		t4.showInfo();  //t4 앵무새 200
+	}
+}
 
 //Ex24)
 
@@ -30,8 +726,6 @@ public class Hello {
 		
 	}
 }
-
-/*
 
 //Ex23) 함수 오버로딩 (함수 재정의)
 class Tiger{
