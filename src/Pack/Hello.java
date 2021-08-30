@@ -17,6 +17,20 @@ public class Hello {
 }
 */
 
+//Ex)
+class Animal{
+	
+}
+
+class Tiger extends Animal{
+	
+}
+
+public class Hello {
+	public static void main(String[] args) {
+		System.out.println("1000");
+	}
+}
 
 /*
 
@@ -81,12 +95,12 @@ class Lion {
 			String s = t.m3();
 			System.out.println("¼º°Ý : " + s);
 			switch (s) {
-				case "¿Â¼ø": {
+				case "¿Â¼ø": 
 					return true;
-				}
-				case "³­Æø": {
+				
+				case "³­Æø": 
 					return false;
-				}
+				
 			}
 			return false;
 		}
