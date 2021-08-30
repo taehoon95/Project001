@@ -17,22 +17,508 @@ public class Hello {
 }
 */
 
-//Ex)
-class Animal{
+// Ex49)
+
+public class Hello {
 	
+	static String hexaToBinary(int n) {
+		String s = Integer.toBinaryString(n);
+//		System.out.println(s);
+//		System.out.println(s.length());
+		
+		while(s.length() < 32) {
+			s = "0" + s;
+		}
+		
+		//String 객체는 insert할수 있는 메서드가 없다
+		//StringBuffer의 객체는 수정,추가,삭제 가능
+		
+		StringBuffer s1 = new StringBuffer(s);
+		
+//		위치가 하나씩 밀림
+//		for(int i = 1; i < 8; i++) {
+//			s1.insert(4*i+(i-1), " ");
+//		}
+		
+//		뒤에서부터 넣으면 들어가는 데이터위치 걱정할 필요 없다.
+		for(int i = 0; i < 7; i++) {
+			s1.insert((7-i)*4, " ");
+		}
+		return s1.toString();
+		
+	}
+	
+	static int m1() {
+		return 100;
+	}
+	
+	public static void main(String[] args) {
+//		System.out.println(m1()*100+20);
+		// 0011 1011 0001 0010 1100 1101 0101 1001
+		int a = 0x3b12cd59;// 
+		int b = 991087961; 
+		
+		if(a == b) {
+//			System.out.println(1);
+		}
+		
+		System.out.println(hexaToBinary(a));
+		System.out.println(hexaToBinary(b));
+	}
 }
 
-class Tiger extends Animal{
-	
+
+
+/*
+// Ex48)
+
+public class Hello {
+	public static void main(String[] args) {
+		int a = 1234; //
+		int b = 0x1234; // 1001000110100
+		System.out.println(a);                           //1234
+		System.out.println(b);                           //4660
+		System.out.println(Integer.toBinaryString(a));   //10011010010
+		System.out.println(Integer.toBinaryString(b));   //1001000110100
+		// 0000 0000 0000 0000 0001 0010 0011 0100
+	}
+}
+
+// Ex47)String
+
+public class Hello {
+	public static void main(String[] args) {
+		String s = "무궁화꽃이피었습니다";
+		// 1. 길이
+		System.out.println(s.length());
+
+		// 2. char charAt(int index)
+		System.out.println(s.charAt(3));
+		
+		// 3. int indexOf(String str)
+		System.out.println(s.indexOf("화꽃이")); //2
+		
+		System.out.println(s.indexOf("목꽃이")); //-1
+		
+		int n = s.indexOf("화꽃이");
+		if(n != -1) {
+			System.out.println("found"); //2
+		}else {
+			System.out.println("not found"); //2
+		}
+		
+		// 4. String replace(CharSequence target, CharSequence replacement)
+		System.out.println(s.replace("꽃이", "나무가"));//나무가무궁화 나무가 피었습니다 나무가
+		// 주의: 
+		System.out.println(s); // 꽃이무궁화꽃이 피었습니다꽃이
+
+		//String은 데이터자체를 변경시킬수 없다.
+		//s="대한민국"; //기존의 객체를 날리고 "대한민국"이라는 새로운 객체를 만듬 
+		//System.out.println(s);
+		
+		// 5. slicing
+		System.out.println(s.substring(6));
+		System.out.println(s.substring(3,6));
+		
+		// 6. trim
+		String s2= "   App   le   ";
+		System.out.print(s2.trim());
+		System.out.println("호랑이");
+		
+		// 7. 대소문자 변경
+		String s3 = "APpLe";
+		System.out.println(s3.toUpperCase());
+		System.out.println(s3.toLowerCase());
+		
+		// 8. String(byte[] bytes, int offset, int length) : 데이터를 받았을때
+		byte[] data = new byte[] {
+				65, 'B', 'C', 'D'
+			};
+		
+		String s4 = new String(data, 0, data.length);
+		System.out.println(s4);
+		
+		//  데이터를 전송할때
+		String s5 = "Banana";
+		byte[] data1 = s5.getBytes();
+		for (byte value : data1) {
+			System.out.println((char)value);
+		}
+	}
+}
+
+
+// Ex46-4)try catch finally
+class Tiger{
+	void m1(int a, int b) {
+		if (a > b) {
+			System.out.println(111);
+		} else {
+			return;
+		}
+		System.out.println(" m1 : " + 2222);
+	}
+
+	void m2(int a, int b) {
+		try {
+			if (a > b) {
+				System.out.println(1111);
+			} else {
+				return;
+			}
+		} catch (Exception e) {
+
+		} finally {
+			System.out.println(" m2 : " + 2222);
+		}
+	}
 }
 
 public class Hello {
 	public static void main(String[] args) {
-		System.out.println("1000");
+		Tiger t1 = new Tiger();
+		t1.m1(1, 4);
+		t1.m2(1, 4);
 	}
 }
 
-/*
+
+
+// Ex46-3)
+public class Hello {
+	public static void main(String[] args) {
+		for(int i = 0; i < 5; i++) {
+			System.out.println(i);
+			try {Thread.sleep(2000);} catch (InterruptedException e) {}
+		}
+	}
+}
+
+
+// Ex46-2)
+class Tiger{
+	void m1() {
+		System.out.println(1);
+		try {
+			throw new Exception();
+		}catch (Exception e) {
+			System.out.println("Exception 발생함");
+		}
+	}
+
+	void m2() throws Exception{
+		System.out.println(2);
+		throw new Exception();
+	}
+}
+
+public class Hello {
+	public static void main(String[] args) {
+		Tiger t1 = new  Tiger();
+		t1.m1();
+		
+		//Unhandle Exception
+		try {
+			t1.m2();
+		} catch (Exception e) {
+			
+		};
+		System.out.println(3);
+		
+	}
+}
+
+
+
+// Ex46) Exception
+public class Hello {
+	public static void main(String[] args){
+		System.out.println(1);
+		try {
+			int a = 10 / 0; // ArithmeticException발생 프로그램 종료
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println(2);
+		
+		System.out.println("----------------------------------------");
+		
+		// ArrayIndexOutOfBoundsException 발생
+		int[] ar = {1,2,3};
+		try {
+			ar[3] = 10;
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("안멈춤");
+
+		System.out.println("----------------------------------------");
+		String s = "무궁화꽃이피었습니다.";
+		System.out.println(s.length());
+		
+		//NullPointerException 발생
+		s = null;
+		try {
+			System.out.println(s.length());
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("안멈춤");
+	}
+}
+
+
+//Ex45-4)
+//문제 : 함수를 호출할때 마다 인공지능을 호출하고 있다.
+class Baduk{
+	Ai ai;
+	
+	Baduk(Ai ai) {
+		this.ai = ai;
+		System.out.println("대국을 시작합니다.");
+	}
+	
+	void play() {
+		ai.play();
+	}
+	
+	void stop() {
+		ai.stop();
+	}
+}
+
+interface Ai{
+	void play();
+	void stop();
+}
+
+//Google에서 만듬
+class Alphago implements Ai{
+	public void play() {
+		System.out.println("인공지능은 Alphago 입니다.");
+	}
+	
+	@Override
+	public void stop() {
+		System.out.println("Alphago 점수계산을 합니다.");
+	}
+}
+
+//Amazon에서 만듬
+class Betago implements Ai{
+	public void play() {
+		System.out.println("인공지능은 Betago 입니다.");
+	}
+	
+	@Override
+	public void stop() {
+		System.out.println("Betago 점수계산을 합니다.");
+	}
+}
+
+public class Hello {
+	public static void main(String[] args) {
+		Baduk baduk1 = new Baduk(new Alphago());
+		Baduk baduk2 = new Baduk(new Betago());
+		baduk1.play();
+		baduk1.stop();
+		baduk2.play();
+		baduk2.stop();
+	}
+}
+
+
+//Ex45-3)
+//문제 : 새로운 클래스가 생길떄마다 바둑클래스에 play메서드 하나더 만들어야한다.
+class Baduk{
+	Baduk() {
+		System.out.println("대국을 시작합니다.");
+	}
+	void play(Ai ai) {
+		ai.play();
+	}
+}
+
+interface Ai{
+	void play();
+}
+
+//Google에서 만듬
+class Alphago implements Ai{
+	public void play() {
+		System.out.println("인공지능은 Alphago 입니다.");
+	}
+}
+
+//Amazon에서 만듬
+class Betago implements Ai{
+	public void play() {
+		System.out.println("인공지능은 Betago 입니다.");
+	}
+}
+
+public class Hello {
+	public static void main(String[] args) {
+		Baduk baduk = new Baduk();
+		baduk.play(new Alphago());
+		baduk.play(new Betago());
+	}
+}
+
+
+//Ex45-2)
+//새로운 클래스가 생길떄마다 바두클래스에 플레이메서드 하나더 만들어야한다.
+class Baduk{
+	Baduk() {
+		System.out.println("대국을 시작합니다.");
+	}
+	
+	void play(Alphago alphago) {
+		alphago.play();
+	}
+	
+	void play(Betago betago) {
+		betago.play();
+	}
+}
+
+//Google에서 만듬
+class Alphago{
+	void play() {
+		System.out.println("인공지능은 Alphago 입니다.");
+	}
+}
+
+//Amazon에서 만듬
+class Betago{
+	void play() {
+		System.out.println("인공지능은 Betago 입니다.");
+	}
+}
+
+//문제점 : 인공지능이 바뀐다면 어떻게 해야 할까?
+public class Hello {
+	public static void main(String[] args) {
+		Baduk baduk = new Baduk();
+		baduk.play(new Alphago());
+		baduk.play(new Betago());
+	}
+}
+
+
+//Ex45-1)
+class Baduk{
+
+	Baduk() {
+		System.out.println("대국을 시작합니다.");
+	}
+	
+	void play() {
+		System.out.println("인공지능은 알파고 입니다.");
+	}
+	
+}
+
+//문제점 : 인공지능이 바뀐다면 어떻게 해야 할까?
+public class Hello {
+	public static void main(String[] args) {
+		Baduk baduk = new Baduk();
+		baduk.play();
+	}
+}
+
+//Ex44-2)
+interface Animal {
+	void m1();
+}
+
+class Zoo {
+	void sound(Animal t) {
+		t.m1();
+	}
+}
+
+public class Hello {
+	public static void main(String[] args) {
+		// 익명 클래스 쓰는 1번째 방법
+		Animal t1 = new Animal() {
+			public void m1() {
+				System.out.println("출력 하기! -1-");
+			}
+		};
+		t1.m1();
+		
+		Zoo t2 = new Zoo();
+		t2.sound(new Animal() {
+			public void m1() {
+				System.out.println("출력 하기! -2-");
+			}
+		});
+	}
+}
+
+
+//Ex44-1)
+interface Animal{
+	void m1();
+}
+
+class Zoo{
+	
+	void m1(Animal t) {
+		
+	}
+	
+}
+
+
+class Tiger implements Animal {
+	@Override
+	public void m1() {
+		System.out.println(1);
+	}
+}
+
+public class Hello {
+	public static void main(String[] args) {
+		Tiger t1 = new Tiger();
+		t1.m1();
+
+		Animal t2 = new Tiger();
+		t2.m1();
+
+		// 익명 클래스를 이용해서 객체를 생성한다. (실전에서 자주 쓰임)
+		Animal t3 = new Animal() {
+			@Override
+			public void m1() {
+				System.out.println(2);
+			}
+		};
+
+		t3.m1();
+
+		//익명객체
+		new Animal() {
+			@Override
+			public void m1() {
+				System.out.println(3);
+			}
+		}.m1();
+		
+		Zoo t4 = new Zoo();
+		
+		//함수인수에 객체를 이용해 코드를 전달
+		t4.m1(new Animal() {
+			@Override
+			public void m1() {
+				System.out.println(4);
+			}
+		});
+		
+	}
+}
+
+
 
 //Ex43-5) this4번째 이용법 : 자기 생성자 안에서 다른 생성자를 호출 할때
 
