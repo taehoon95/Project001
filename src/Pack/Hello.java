@@ -16,6 +16,246 @@ public class Hello {
 	}
 }
 */
+
+
+/*
+
+//Ex43-5) this4번째 이용법 : 자기 생성자 안에서 다른 생성자를 호출 할때
+
+class Tiger {
+	int a;
+	
+	Tiger() {
+		System.out.println(1);
+	}
+
+	Tiger(int a) {
+		this(); 
+		System.out.println(a);
+	}
+
+	Tiger(int a, int b) {
+		this(a+b); //인자 하나 가진 생성자 호출
+		System.out.println(a + " " + b);
+	}	
+
+}
+
+public class Hello {
+	public static void main(String[] args) {
+		Tiger t1 = new Tiger(10, 20);
+	}
+}
+
+
+// Ex43-4) this3번째 이용법 : 자신의 객체를 보내면 호출한쪽은 받은 객체의 정보를 이용한다.
+
+class Tiger{
+	
+	void m1() {
+		System.out.print("가지고 있는 재산은 : ");
+		Lion t1 = new Lion();
+		if(t1.merry(this) == true) {
+			System.out.println("감사합니다.");
+		}else {
+			System.out.println("ㅠㅠ");
+		}
+	}
+	
+	int m2() {
+		return 50;
+	}
+	
+	String m3() {
+		return "난폭";
+	}
+}
+
+class Lion {
+
+	boolean merry(Tiger t) {
+		System.out.println(t.m2());
+		if (t.m2() >= 80) {
+			return true;
+		} else {
+			String s = t.m3();
+			System.out.println("성격 : " + s);
+			switch (s) {
+				case "온순": {
+					return true;
+				}
+				case "난폭": {
+					return false;
+				}
+			}
+			return false;
+		}
+	}
+
+}
+
+public class Hello {
+	public static void main(String[] args) {
+		Tiger t1 = new Tiger();
+		t1.m1();
+	}
+}
+
+
+//Ex43-3) this2번째 이용법 : 함수의 호출을 체이닝해서 사용
+
+class Tiger{
+	
+	Tiger m1() {
+//1.	return new Tiger();
+		
+//2.	Tiger t = new Tiger();
+//		return t;
+//3.
+		System.out.println(1);
+		return this; 
+	}
+	
+	 Tiger m2() {
+		 System.out.println(2);
+		 return this;
+	 }
+	 
+	 void m3() {
+		 System.out.println(3);
+	 }
+}
+
+public class Hello {
+	public static void main(String[] args) {
+		Tiger t1 = new Tiger();
+		
+		Tiger t2 = new Tiger();
+		
+		System.out.println(t1.hashCode() + " " + t1.m1().hashCode());
+
+		System.out.println(t2.hashCode() + " " + t2.m1().hashCode());
+		
+		System.out.println("----------------------------------------");
+		t1.m1().m2().m1().m2().m3();//체이닝
+	}
+}
+
+//Ex42-2)this1번째 이용법
+class Tiger {
+
+//	Tiger this;
+//	
+//	Tiger(Tiger t){
+//		this = t;
+//	}
+
+	int a, b, size; //필드변수
+
+	Tiger(int a, int b, int size) {// 멤버 필드를 초기화
+		this.a = a; // 멤버 a = 전달받은 인수 a 
+		this.b = b;
+		this.size = size;
+	}
+
+	void show() {
+		System.out.println(this.a + " " + this.b + " " + this.size);
+	}
+	
+}
+
+public class Hello {
+	public static void main(String[] args) {
+
+		Tiger t1 = new Tiger(10, 20, 5);
+		int num = 10;
+		num = num;// 셀프 대입(자기 대입), 쓸모없는 코드
+
+		t1.show();
+	}
+}
+
+
+// Ex42-1)this1
+
+class Tiger{
+	
+	int a;
+	int b;
+	
+//	Tiger this;
+//	
+//	Tiger(Tiger t) {
+//		this = t;
+//	} 기본 생성자에 생략된 부분 모두 표시한 경우
+	
+	Tiger(){}	
+	
+	Tiger(Tiger t,int a, int b) {
+		//this = t;
+		//t.a = a; => this.a = a;
+		t.a = a;
+		System.out.print(t.hashCode());
+		System.out.print(this.hashCode());
+	}
+	
+	Tiger(int a, int b) {
+		this.a = a;
+		this.b = b;
+		System.out.print(this.hashCode());
+	}
+
+	void m1(int a, String b, Tiger c) {
+		System.out.println(1);
+		
+	}
+	
+}
+
+public class Hello {
+	public static void main(String[] args) {
+		Tiger t = new Tiger(); // -> Tiger t = new Tiger(t);
+		
+		
+		Tiger t1 = new Tiger(10, 20);
+		System.out.println(" " +t1.hashCode());
+		
+		Tiger t2 = new Tiger(30, 40);
+		System.out.println(" " +t2.hashCode());
+		t2.m1(0, null, t1);
+//		t1.m1(1,"s0",new Tiger());
+	}
+}
+
+
+// Ex41) final : 상수가 된다. (대문자, 더이상 값을 변경할 수 없다, 대입을 받는것이 여기가 마지막) 
+
+class Animal{
+//final class Animal{ class 앞에 final을 쓰면 상속을 불가능하게 한다.
+	final int NUM = 10;
+	
+	final void m1() {//여기가 마지막 오버라이딩이다.
+		}
+}
+
+class Tiger extends Animal{
+//	void m1() {} 부모가 final로 메서드를 생성했기 떄문에 이 형태로는 메서드를 만들수 없다.
+
+}
+
+
+
+
+public class Hello {
+	public static void main(String[] args) {
+		Animal t1 = new Animal();
+//		t1.NUM = 20; 자체가 성립이 안된다.
+		System.out.println(Math.PI);
+		System.out.println(t1.NUM);
+		String s;
+	}
+}
+
 // Ex40)
 class A{
 	void m1() {
@@ -65,7 +305,6 @@ public class Hello {
 	}
 }
 
-/*
 
 // Ex39)
 interface 한국은행{
