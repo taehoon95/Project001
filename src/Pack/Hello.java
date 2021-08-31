@@ -1,5 +1,8 @@
 package Pack;
 
+import java.util.LinkedList;
+import java.util.function.Predicate;
+
 /*  
 // Ex)
 class Animal{
@@ -16,8 +19,226 @@ public class Hello {
 	}
 }
 */
+//Ex)50
+public class Hello {
+	public static void main(String[] args) {
+		LinkedList<Integer> mm = new LinkedList<Integer>();
+//		for(int i = 0; i < 10; i++) {
+//			mm.add(i*10+i);
+//		}
+//		System.out.println(mm);
+//		
+//		int size = mm.size();
+//		
+//		for(int i = 0; i < size; i++) {
+//			int num = mm.get(i);
+//			if(num == 1111) {
+//				System.out.println(i + " 번째 찾았다.");
+//				break;
+//			}
+//			
+//			if(i == mm.size()-1) {
+//				System.out.println("못 찾았다.");
+//			}
+//		}
+//		
+//		
+//		for(int i = 0; i < size-1; i++) {
+//			int num = mm.get(i);
+//			System.out.println(num);
+//			if(num == 55) {
+//				mm.remove(i);
+//			}
+//		}
+//		System.out.println(mm);
+		mm.add(33);
+		mm.add(44);
+		mm.add(77);
+		
+		for(int i = 0; i < 10; i++) {
+			mm.add(i*2);
+		}
+		
+		mm.add(101);
+		mm.add(102);
+		mm.add(103);
+		System.out.println(mm);
+		
+//		int size =  mm.size()-1;
+//		
+//		for(int i = 0; i < size; i++) {
+//			int num = mm.get(size - i);
+//			if(num % 2 == 0) {
+//				mm.remove(size - i);
+//			}
+//		}
+//		
+//		System.out.println(mm);
 
-// Ex49)
+		// 풀이
+		// 1.
+//		for (int i = 0; i < mm.size(); i++) {
+//			int num = mm.get(i);
+//			if(num % 2 == 0) {
+//				mm.remove(i);
+//				i--; //i++만 되면 삭제될경우 건너뛰게 됨
+//			}
+//		}
+		
+		// 1-2.정석코드
+//		for (int i = 0; i < mm.size();) {
+//			int num = mm.get(i);
+//			if(num % 2 == 0) {
+//				mm.remove(i);
+//			}else {
+//				i++; 
+//			}
+//		}
+		
+		// 2. 이터레이터 사용
+//		for(Iterator<Integer> it = mm.iterator(); it.hasNext();) {
+//			Integer num = it.next();
+//			if(num % 2 == 0) {
+//				it.remove();
+//			}
+//		}
+
+		// 3. removeIf((Predicate<> ) : 내부적으로 for문을 돌면서 조건에 맞추어서 remove
+//		mm.removeIf(new Predicate<Integer> (){
+//
+//			@Override
+//			public boolean test(Integer num) {
+//				return num % 2 == 0;
+//			}
+//			
+//		});
+		
+		// 4. 람다 함수 사용
+		mm.removeIf( num -> num % 2 == 0);
+		System.out.println(mm);
+	}
+}
+
+
+
+/*
+
+// Ex)49 Collection : LinkedList 무난하게 다좋음
+// 컨테이너<제네릭> : 한가지의 자료형 타입만 관리할 수 있는것 
+public class Hello {
+	public static void main(String[] args) {
+		LinkedList<Integer> mm = new LinkedList<Integer>();
+		
+		// C(reate)RUD
+		mm.add(10);
+		System.out.println(mm.size());
+		for(int i = 0; i < 10; i++) {
+			mm.add(i * 10 + i);
+		}
+		
+		// CR(ead)UD
+		// 1.
+		System.out.println(mm);
+		
+		// 2.
+		int size = mm.size(); // 함수를 한번만 호출하도록 하기위해 이렇게 사용한다.
+		
+		for(int i = 0; i < size; i++) {
+			int data = mm.get(i);
+			System.out.print(data + " ");
+		}System.out.println();
+		
+		// 3. x, item, data, value
+		for (Integer x : mm) {
+			System.out.print(x + " ");
+		}System.out.println();
+		
+		//CRU(pdate)D
+		mm.set(5, 999);
+		System.out.println(mm);
+		
+		//CRUD(elete)
+		mm.remove(5);
+		System.out.println(mm);
+		
+	}
+}
+
+//Ex48-2)StringBuffer를 이용한 이진수 출력
+
+public class Hello {
+	
+	static String hexaToBinary(int n) {
+		String s = Integer.toBinaryString(n);
+
+		while(s.length() < 32) {
+			s = "0" + s;
+		}
+		
+		StringBuffer s1 = new StringBuffer(s);
+		
+		for(int i = 0; i < 7; i++) {
+			s1.insert((7-i)*4, " ");
+		}
+
+		return s1.toString();
+	}
+	
+	
+	public static void main(String[] args) {
+		int a = 0x3b12cd5a;
+		
+		int b = 0x0000ff00;
+		int c = 0x0000cd5a;
+//		
+//		System.out.println(hexaToBinary(a));
+//		System.out.println(hexaToBinary(b));
+//		System.out.println(hexaToBinary(a & b)); // cd00
+//		System.out.println(hexaToBinary((a & b) >> 8)); // cd 8비트 이동해라
+//		System.out.println(hexaToBinary(a & b >> 8)); // 59 8비트 이동해라
+//		System.out.println((a & b)); // cd00
+//		System.out.println(hexaToBinary(((a >> 12) & b) >> 8)); // cd00
+//		
+//		System.out.println("c :" + hexaToBinary(c));
+//
+//		
+//		System.out.println(hexaToBinary(0xf800));
+//		System.out.println(hexaToBinary(c & 0xf800));
+//		System.out.println((c & 0xf800) >> 11);
+//		
+//		System.out.println(hexaToBinary((c&0x7e0) >> 5));
+//		System.out.println((c&0x7e0) >> 5);
+//		
+//		System.out.println(hexaToBinary(c&0x1f));
+//		System.out.println((c&0x1f));
+		
+		int e = 0x77000000;
+		
+		int c1 = 25; //11번 옮긴사실을암
+		int c2 = 42; 
+		int c3 = 26;
+		int c4;
+		
+//		System.out.println(Integer.toHexString((c1<<11 | c2 << 5 | c3))); 
+		
+		// 0000 0000 1101 1100
+		char c5 = 0x00dc; //
+		char mask = 0x0080; //2.마스크변수 자체가 쉬프트 되고 있는가?
+		
+		//1. 문자열 배열 있는가?
+		String[] arr = {"냉장고","가스레인지","선풍기","밥솥","에어컨","전기장판","에어프라이기","전자레인지"};
+
+		for(int i = 0; i < 8; i++, mask >>= 1 ) {
+			//3. 삼항연산 되어있는가?
+			System.out.println((c5 & mask) == mask ? arr[i] + " on" : arr[i] + " off");
+		}
+		
+	}
+}
+//시프트 연산 들어오는것은 0 나가는것은 소실
+
+
+// Ex48-2)StringBuffer를 이용한 이진수 출력
 
 public class Hello {
 	
@@ -67,10 +288,7 @@ public class Hello {
 	}
 }
 
-
-
-/*
-// Ex48)
+// Ex48-1) 이진수 출력
 
 public class Hello {
 	public static void main(String[] args) {
@@ -147,7 +365,6 @@ public class Hello {
 	}
 }
 
-
 // Ex46-4)try catch finally
 class Tiger{
 	void m1(int a, int b) {
@@ -182,8 +399,6 @@ public class Hello {
 	}
 }
 
-
-
 // Ex46-3)
 public class Hello {
 	public static void main(String[] args) {
@@ -193,7 +408,6 @@ public class Hello {
 		}
 	}
 }
-
 
 // Ex46-2)
 class Tiger{
@@ -227,8 +441,6 @@ public class Hello {
 		
 	}
 }
-
-
 
 // Ex46) Exception
 public class Hello {
@@ -266,7 +478,6 @@ public class Hello {
 		System.out.println("안멈춤");
 	}
 }
-
 
 //Ex45-4)
 //문제 : 함수를 호출할때 마다 인공지능을 호출하고 있다.
