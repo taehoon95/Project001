@@ -1,7 +1,19 @@
 package Pack;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.function.Predicate;
+import java.util.List;
+import java.util.Map;
+import java.util.NavigableSet;
+import java.util.Queue;
+import java.util.Set;
+import java.util.Stack;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 /*  
 // Ex)
@@ -19,6 +31,204 @@ public class Hello {
 	}
 }
 */
+
+class Message{
+	String command;
+	String to;
+	
+	public Message(String command, String to) {
+		this.command = command;
+		this.to = to;
+	}
+}
+
+class Coin{ //stack
+	int value;
+
+	Coin(int value) {
+		this.value = value;
+	}
+
+	int getValue() {
+		return value;
+	}
+}
+
+class Person /* implements Comparable<Person> */{ //treeSet, treeMap
+	String name;
+	int age;
+	
+	public Person(String name, int age) {
+		this.name = name;
+		this.age = age;
+	}
+	
+//	@Override
+//	public int compareTo(Person o) {
+//		if(age<o.age) return -1;
+//		else if(age==o.age) return 0;
+//		else return 1;
+//	}
+
+	@Override
+	public String toString() {
+		return String.format("%s %s", name, age);
+	}
+	
+}
+
+public class Hello {
+	public static void main(String[] args) {
+		//1. ArrayList
+		List<Integer> a = new ArrayList<Integer>();
+		a.add(1);
+		a.add(2);
+		a.add(3);
+		a.add(4);
+		a.add(3, 77);
+
+//		for(Iterator<Integer> it = a.iterator(); it.hasNext();) {
+//			System.out.println(it.next());
+//		}
+		
+		//2. Set
+		Set<String> s = new HashSet<String>();
+		s.add(new String("1"));
+		s.add(new String("2"));
+		s.add(new String("1"));
+		
+		s.remove("1");
+//		for(Iterator<String> it = s.iterator() ; it.hasNext();) {
+//			System.out.println(it.next());
+//		}
+		
+		//3.HashMap
+		Map<Integer, Integer> m = new HashMap<>();
+//		m.put(1, 1);
+//		m.put(2, 2);
+//		m.put(3, 3);
+//		
+//		for(Iterator<Integer> it = m.keySet().iterator(); it.hasNext();) {
+//			System.out.println(it.next());
+//		}
+//
+//		for(Iterator<Integer> it = m.values().iterator(); it.hasNext();) {
+//			System.out.println(it.next());
+//		}
+		
+		//4.TreeSet
+		TreeSet<Integer> score = new TreeSet<Integer>();
+		score.add(44);
+		score.add(77);
+		score.add(55);
+		score.add(66);
+		score.add(22);
+		
+//		for(Iterator<Integer> it = score.iterator(); it.hasNext();) {
+//			System.out.println(it.next());
+//		}
+		
+		NavigableSet<Integer> v = score.descendingSet();
+		NavigableSet<Integer> asc = v.descendingSet();
+		
+//		for(Integer is : v) {
+//			System.out.println(is);
+//		}
+	
+//		for(Integer is : asc) {
+//			System.out.println(is);
+//		}
+
+//		TreeSet<String> fruit = new TreeSet<String>();
+//		fruit.add("cherry");
+//		fruit.add("banana");
+//		fruit.add("pear");
+//		fruit.add("watermellon");
+//		
+//		String start = "b";
+//		String end = "d";
+//		System.out.println(start + " " + end + "사이의 단어 검색");
+//		NavigableSet<String> sd = fruit.subSet(start, true, end, true);
+//		for(String word : sd) {
+//			System.out.println(word);
+//		}
+		
+		//5.TreeMap
+		TreeMap<Integer, String> trm = new TreeMap<>();
+		trm.put(99, "A");
+		trm.put(75, "B");
+		trm.put(50, "C");
+		trm.put(65, "D");
+		trm.put(88, "E");
+		
+		NavigableSet<Integer> des = trm.descendingKeySet();
+//		Set<Map.Entry<Integer, String>> se = trm.entrySet();
+//		for(Map.Entry<Integer, String> n : se) {
+//			System.out.println(n);
+//		}
+		
+		//숫자 범위 검색
+//		NavigableMap<Integer, String> nvm = trm.subMap(50, true, 88, true);
+//		for(Map.Entry<Integer, String> asd : nvm.entrySet()) {
+//			System.out.println(asd.getKey() + " " + asd.getValue());
+//		}
+
+		// Comparable을 구현 하지 않으면 ClassCastExeption발생 
+		// Comparator인터페이스를 구현한 Asd()클래스 생성해서 에러발생을 막을수도있다.
+		TreeSet<Person> trs = new TreeSet<Person>(new Asd());
+		
+		trs.add(new Person("이", 22));
+		trs.add(new Person("김", 66));
+		trs.add(new Person("홍", 44));
+		trs.add(new Person("박", 84));
+		trs.add(new Person("조", 14));
+		
+//		for(Iterator<Person> it = trs.iterator(); it.hasNext();) {
+//			System.out.println(it.next());
+//		}
+
+		// 6.Stack
+		Stack<Coin> coinBox = new Stack<Coin>();
+		
+		coinBox.push(new Coin(100));
+		coinBox.push(new Coin(10));
+		coinBox.push(new Coin(500));
+		coinBox.push(new Coin(50));
+		
+//		while(!coinBox.isEmpty()) {
+//			Coin coin = coinBox.pop();
+//			System.out.println("꺼내온 동전 " + coin.getValue());
+//		}
+		
+		//7.Queue
+		Queue<Message> messageQueue = new LinkedList<Message>();
+		
+		messageQueue.offer(new Message("sendMail", "나1"));
+		messageQueue.offer(new Message("sendSMS", "나2"));
+		messageQueue.offer(new Message("sendkakaotalk", "나3"));
+		
+		while(!messageQueue.isEmpty()) {
+			Message message = messageQueue.poll();
+			switch (message.command) {
+			case "sendMail": System.out.println(message.to+" 님에게 메일을 보냅니다."); break;
+			case "sendSMS": System.out.println(message.to+" 님에게 SMS을 보냅니다."); break;
+			case "sendkakaotalk": System.out.println(message.to+" 님에게 카톡을 보냅니다."); break;
+			}
+		}
+	}
+}
+
+class Asd implements Comparator<Person>{
+	@Override
+	public int compare(Person o1, Person o2) {
+		if(o1.age <o2.age) return -1;
+		else if(o1.age == o2.age) return 0;
+		else return 1;
+	}
+}
+
+/*
+
 //Ex)50
 public class Hello {
 	public static void main(String[] args) {
@@ -118,10 +328,6 @@ public class Hello {
 		System.out.println(mm);
 	}
 }
-
-
-
-/*
 
 // Ex)49 Collection : LinkedList 무난하게 다좋음
 // 컨테이너<제네릭> : 한가지의 자료형 타입만 관리할 수 있는것 
