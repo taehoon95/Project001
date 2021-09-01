@@ -1,21 +1,7 @@
 package Pack;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.NavigableSet;
-import java.util.Queue;
-import java.util.Set;
-import java.util.Stack;
-import java.util.TreeMap;
-import java.util.TreeSet;
-
 /*  
+
 // Ex)
 class Animal{
 	
@@ -30,8 +16,621 @@ public class Hello {
 		System.out.println("1000");
 	}
 }
+// sdk : software developer kit: 소프트웨어 개발하는 라이브러리
 */
 
+public class Hello {
+	public static void main(String[] args) {
+		
+	}
+}
+
+
+
+/*
+//Ex58-4)스레드 : 실제사용되는 코드 
+public class Hello {
+	public static void main(String[] args) {
+		Thread t = new Thread() {
+			public void run() {
+				System.out.println(1);
+			};
+		};
+		t.start();// 호출이 아니라 스레드가 발동됨
+		
+		new Thread() {
+			public void run() {
+				System.out.println(1);
+			};
+		}.start();
+		
+	}
+}
+
+//Ex58 -3) 스레드 
+class Tiger extends Thread {
+	public void run() {
+		System.out.println("Tiger start");
+		Thread t = new Lion();
+		t.start();
+		Scanner sc = new Scanner(System.in);
+		sc.nextInt(); //블로킹함수 : 특정한 작업이 없으면 중단되지않는다.
+		System.out.println("Tiger end");
+	}
+}
+
+class Lion extends Thread {
+	public void run() {
+		System.out.println("Lion start");
+		Scanner sc = new Scanner(System.in);
+		sc.nextInt(); //블로킹함수 : 특정한 작업이 없으면 중단되지않는다.
+		System.out.println("Lion end");
+	}
+}
+
+
+// 프로세스 살아있다면 디버그창을 열어서 Terminate and Remove로 끈다.
+// 숫자 입력하고 엔터 쳤는데 둘다 안죽은 경우: 입력받은 후 제어권을 다음 객체에 넘겼다. 그래서 마지막에 한번에 수행된다.
+public class Hello {
+	public static void main(String[] args) {
+		System.out.println("main start");
+		Thread t = new Tiger();
+		t.start();
+		Scanner sc = new Scanner(System.in);
+		sc.nextInt(); //블로킹함수 : 특정한 작업이 없으면 중단되지않는다.
+		System.out.println("main end");
+	}
+}
+
+
+//Ex58 -2) 스레드 
+class Tiger extends Thread{
+	public void run() { // 2
+		System.out.println(2);
+		// 반복문
+		for(int i = 0; i < 10; i++) {
+			System.out.println("호랑이" + i);
+			
+			try {
+				Thread.sleep(0); // 0이면 쉬긴 쉬는데 1/1000초 보단 적게 쉼
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		System.out.println("종료");
+	};
+}
+
+public class Hello {
+	public static void main(String[] args) {
+		Thread t = new Tiger();
+		t.start(); // 1 Thread 안에는 start()가 있고 그 안에 run()이 있다.
+		System.out.println(1);
+		// 반복문
+		for(int i = 0; i < 10; i++) {
+			System.out.println("코끼리" + i);
+			
+			try {
+				Thread.sleep(0); // 0이면 쉬긴 쉬는데 1/1000초 보단 적게 쉼
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		System.out.println("main Exit");
+	}
+}
+
+
+//Ex58 -1) 스레드하기전 문법 정리 
+
+class A {
+	void start() {
+		System.out.println("start call");
+		run();
+	}
+	
+	void run() {
+		System.out.println("A run call");
+	}
+}
+
+class B extends A {
+	@Override
+	void run() {
+		System.out.println("스레드 시작");
+		System.out.println("B run call");
+		System.out.println("스레드 종료");
+	}
+}
+
+public class Hello {
+	public static void main(String[] args) {
+		A a = new B();
+		a.start();
+	}
+}
+
+
+//Ex57) 제네릭 문법 : <T> 객체를 생성할때 타입을 정하므로 무한정 만들 필요 없다.
+class A<E> {
+	private E data;
+	
+	public E getData() {
+		return data;
+	}
+	
+	public void setData(E data) {
+		this.data = data;
+	}
+}
+
+public class Hello{
+	public static void main(String[] args) {
+		A<Integer> a = new A<Integer>();
+		a.setData(100);
+		System.out.println(a.getData());
+		
+		A<String> b = new A<String>();
+		b.setData("호랑이");
+		System.out.println(b.getData());
+	}
+}
+//Ex57) 문제: 타입이 바뀔때 마다 클래스를 생성해야된다.
+class A {
+	private int data;
+	
+	public int getData() {
+		return data;
+	}
+	
+	public void setData(int data) {
+		this.data = data;
+	}
+}
+
+class B {
+	private String data;
+	
+	public String getData() {
+		return data;
+	}
+	
+	public void setData(String data) {
+		this.data = data;
+	}
+}
+
+class C {
+	private float data;
+	
+	public float getData() {
+		return data;
+	}
+	
+	public void setData(float data) {
+		this.data = data;
+	}
+}
+
+public class Hello{
+	public static void main(String[] args) {
+		A a = new A();
+		a.setData(100);
+		System.out.println(a.getData());
+		
+		B b = new B();
+		b.setData("호랑이");
+		System.out.println(b.getData());
+	}
+}
+
+//Ex56-4) 디자인 패턴 : 데코레이션 패턴(객체가 객체를 감싸는)
+class 커피 {
+	int 가격 = 30;
+	
+	int 계산() {
+		System.out.println("커피 주문");
+		return 가격;
+	}
+}
+
+class 설탕 extends 커피 {
+	int 가격 = 20;
+	커피 a; //곧 사라질 객체를 백업
+	
+	설탕(커피 a){
+		this.a = a;
+	}
+	
+	int 계산() {
+		System.out.println("설탕추가");
+		return 가격 + a.계산();
+	}
+}
+
+class 프림 extends 커피 {
+	int 가격 = 10;
+	커피 a; //곧 사라질 객체를 백업
+	
+	프림(커피 a){
+		this.a = a;
+	}
+	
+	int 계산() {
+		System.out.println("프림 추가");
+		return 가격 + a.계산();
+	}
+}
+
+public class Hello {
+	public static void main(String[] args) {
+		커피 a = new 커피();
+		//System.out.println(a.계산());
+		
+		a = new 설탕(a); 
+		//System.out.println(a.계산());
+
+		//System.out.println("--------------------------");
+		a = new 프림(a); //인자 a는 B에 있던 a
+		System.out.println(a.계산());
+	}
+}
+
+
+//Ex56-3) 디자인 패턴 : 데코레이션 패턴(객체가 객체를 감싸는)
+class A {
+	int num = 10;
+	
+	int run() {
+		System.out.println("A Run");
+		return num;
+	}
+}
+
+class B extends A {
+	int num = 20;
+	A a; //곧 사라질 객체를 백업
+	
+	B(A a){
+		this.a = a;
+	}
+	
+	int run() {
+		System.out.println("B Run");
+		return num + a.run();
+	}
+}
+
+class C extends A {
+	int num = 30;
+	A a; //곧 사라질 객체를 백업
+	
+	C(A a){
+		this.a = a;
+	}
+	
+	int run() {
+		System.out.println("C Run");
+		return num + a.run();
+	}
+}
+
+public class Hello {
+	public static void main(String[] args) {
+		A a = new A();
+		
+		a = new B(a); 
+		System.out.println(a.run());
+
+		System.out.println("--------------------------");
+		a = new C(a); //인자 a는 B에 있던 a
+		System.out.println(a.run());
+	}
+}
+
+
+
+//Ex56-2 ) 디자인 패턴
+class AA{}
+
+class BB extends AA{}
+class CC extends AA{}
+
+public class Hello{
+	public static void main(String[] args) {
+		
+		AA a1 = new BB();
+		System.out.println("BB a1 : " +a1.hashCode());
+		
+		a1 = new CC();
+		System.out.println("CC a1 : " +a1.hashCode());
+
+		AA a2 = a1; //객체 백업
+		System.out.println("a2 : " +a2.hashCode());
+		
+		a1 = new BB();
+		System.out.println("BB a1 : " +a1.hashCode());
+		System.out.println("a2 : " +a2.hashCode());
+	}
+}
+
+//Ex56-1 ) 디자인 패턴
+class AA{}
+
+class BB extends AA{}
+class CC extends AA{}
+
+public class Hello{
+	public static void main(String[] args) {
+		
+		AA a1 = new BB();
+		System.out.println(a1.hashCode());
+		
+		a1 = new CC();
+		System.out.println(a1.hashCode());
+		
+		AA a2 = a1; //객체 백업
+		a1 = new BB();
+		System.out.println(a1.hashCode());
+	}
+}
+
+//Ex55 - 2) 파일 입출력 : 사용하고 닫는 작업을 무조건 수행해줘야 한다.
+
+public class Hello {
+	public static void main(String[] args) {
+		try {
+			Writer w = new FileWriter("test01.txt"); // "test01.txt"만들기
+			
+			for(int i = 0; i < 10; i++) {
+				for(int j = 0; j < 10; j++) {
+					w.write((i + j) % 2 == 0 ? "O " : "X "); 
+				}
+				w.write("\n");
+			}
+			
+			w.close();
+			//Reader r = new FileReader("test02.txt", Charset.forName("UTF-8"));
+			//Reader r = new FileReader("test02.txt", StandardCharsets.UTF_8);
+			
+			Reader r = new FileReader("test02.txt");
+			int data;
+			
+			while(true){
+				data = r.read();
+				if(data == -1) {
+					break;
+				}
+				System.out.print((char)data);
+			}
+			System.out.println();
+			
+			r.close();
+			System.out.println("파일 입출력 종료");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+}
+
+
+//Ex55 - 1) 이중 for문 파일 입출력
+
+public class Hello {
+	public static void main(String[] args) {
+		
+		for(int i = 0; i < 3; i++) {
+			for(int j = 0; j < 4; j++) {
+				System.out.print("[" + i + " " + j + "]");
+			}
+			System.out.println();
+		}System.out.println();
+
+		for(int i = 0; i < 5; i++) {
+			for(int j = 0; j < 6; j++) {
+				if((i + j) % 2 == 0) {
+					System.out.print("O ");
+				}else {
+					System.out.print("X ");
+				}
+			}
+			System.out.println();
+		}System.out.println();
+		
+		
+	}
+}
+
+
+//Ex54) 디자인 패턴(싱글톤 패턴)
+class Tiger{
+	int num;
+	private static Tiger instance = null;
+	
+	private Tiger() {}
+	
+	static Tiger getInstance() {
+		if(instance == null) {
+			System.out.println(1);
+			instance = new Tiger();
+		}
+		return instance;
+	}
+	
+	void m1() {
+		System.out.println(22);
+	}
+}
+
+public class Hello {
+	public static void main(String[] args) {
+//		Tiger t1 = new Tiger();
+//		Tiger t2 = new Tiger();
+
+		Tiger t1 = Tiger.getInstance();
+		Tiger t2 = Tiger.getInstance();
+		
+		System.out.println(t1.hashCode() == t2.hashCode());
+		t1.m1();
+		t2.m1();
+		t1.num = 2000;
+		System.out.println("-----------------------------");
+		System.out.println(t2.num);
+	}
+}
+
+
+
+// Ex53)
+
+class Tiger{
+	private int num;
+	
+	// setter, getter (setter, getter제공으로 읽기전용,쓰기전용,둘다못하게 하려고 할 수 있다)
+	public void setNum(int num) {
+		this.num = num;
+	}
+	
+	public int getNum() {
+		return this.num;
+	}
+	//
+	
+	// 내부에서 작성할때 사용
+	private void m1() {
+		
+	}
+	
+} 
+
+public class Hello {
+	public static void main(String[] args) {
+		Tiger t = new Tiger();
+		t.b = 10;
+		//t.a = 20;
+		
+		t.setNum(100);
+		System.out.println(t.getNum());
+	}
+}
+
+
+//Ex52) 람다 실제 사용 모습
+interface Test1 {
+	void m1();
+}
+
+interface Test2 {
+	int m1();
+}
+
+class Tiger {
+	void m2(Test1 t) {
+		t.m1();
+	}
+	
+	void m3(Test2 t) {
+		System.out.println(t.m1());
+	}
+}
+
+public class Hello {
+	public static void main(String[] args) {
+		//ex1)
+		Test1 t1 = () -> {
+				System.out.println(1);
+		};
+		
+		Tiger tiger = new Tiger();
+		
+		tiger.m2(t1);
+		
+		//실제 사용 모습
+		tiger.m2(() -> {
+			System.out.println(2);
+		});
+		
+		// return 있는 경우 사용 모습
+		tiger.m3(() -> 100);
+		
+		LinkedList<Integer> mm = new LinkedList<Integer>();
+		mm.removeIf(lion -> {
+			return lion % 2 == 0;
+		});
+		mm.removeIf(lion -> lion % 2 == 0);
+		
+		mm.removeIf(new Predicate<Integer>() {
+			
+			@Override
+			public boolean test(Integer tiger) {
+				return tiger % 2 == 0;
+			}
+		});
+		
+	}
+}
+
+//Ex51) 람다 함수 사용(람다함수는 인터페이스 안에 함수가 하나가 있다는 전제하에 사용)
+
+interface Test1{
+	void m1();
+}
+
+interface Test2{
+	void m1(int num);
+}
+
+interface Test3{
+	int m1();
+}
+
+interface Test4{
+	String m1(int num, String str);
+}
+
+public class Hello {
+	public static void main(String[] args) {
+		// ex1) 익명 객체 사용
+		Test1 t1 = new Test1() {
+			@Override
+			public void m1() {
+				System.out.println(1);
+			}
+		};
+		t1.m1();  //1
+		
+		// ex2) 익명 객체 사용 -> 람다(스코프만 남기고 삭제 -> () -> {}; 람다함수의 기본형
+		Test1 t2 = () -> {System.out.println(1);};
+		t2.m1();  //1
+		
+		//ex3) 함수에 인수 전달이 있을 경우
+		Test2 t3 = (n) -> {
+			System.out.println(n);
+		};
+		
+		t3.m1(3); //3
+		
+		//ex4) return값이 있는 경우
+		Test3 t4 = () -> {
+			System.out.print("Test3  "); 
+			return 100;
+		};
+		System.out.println(t4.m1()); // Test3  100
+		
+		//ex5) return값과 인수전달(2개) 있는 경우
+		Test4 t5 = (n,s) -> {
+			return n + s;
+		};
+		System.out.println(t5.m1(10, "호랑이"));
+		
+		//ex6) return 한줄만 사용이 될 때는 스코프생략가능한데 그때는 return이라는 키워드도 생략 해야됌 
+		Test3 t6 = () -> 100;
+	}
+}
+
+
+Ex) Collection
 class Message{
 	String command;
 	String to;
@@ -54,7 +653,7 @@ class Coin{ //stack
 	}
 }
 
-class Person /* implements Comparable<Person> */{ //treeSet, treeMap
+class Person  implements Comparable<Person> { //treeSet, treeMap
 	String name;
 	int age;
 	
@@ -227,7 +826,6 @@ class Asd implements Comparator<Person>{
 	}
 }
 
-/*
 
 //Ex)50
 public class Hello {
