@@ -370,7 +370,7 @@ public class Hello {
 	}
 }
 
-//Ex48-2)StringBuffer를 이용한 이진수 출력
+//Ex48-3)비트연산( &, |)
 
 public class Hello {
 	
